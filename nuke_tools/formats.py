@@ -4,6 +4,7 @@
 import nuke
 import collections
 
+# A dictionary of common formats
 NUKE_FORMATS = {
     'hd': '1920 1080 1',
     'hhd': '960 540 1',
