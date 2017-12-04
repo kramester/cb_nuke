@@ -1,9 +1,10 @@
 """Adds custom nodes, plugins, and tools to the menus.
 """
-
+import os
 import nuke
 import viewer_util
 import node_util
+import gizmo_util
 
 # default menu icon for all non-vanilla nuke menu items
 DEFAULT_MENU_ICON = 'cb_icon.png'
@@ -52,3 +53,8 @@ def install():
     node_menu.addCommand('Color/ColorCorrect', "nuke_tools.node_util.context_aware_create_node('ColorCorrect', None, 'DeepColorCorrect')", 'c', icon="ColorCorrect.png")
     node_menu.addCommand('Image/Write', "nuke_tools.node_util.context_aware_create_node('Write', None, 'DeepWrite')", 'w', icon="Write.png")
     node_menu.addCommand('Time/FrameHold', "nuke.createNode('FrameHold')['first_frame'].setValue( nuke.frame() )", icon='FrameHold.png')
+
+    # Gizmos
+    studio_gizmos = gizmo_util.library_from_path(os.getenv('NUKE_GIZMO_PATH'))
+    gizmo_util.load_library(studio_gizmos)
+    gizmo_util.add_libary_to_menu(studio_gizmos, node_menu)

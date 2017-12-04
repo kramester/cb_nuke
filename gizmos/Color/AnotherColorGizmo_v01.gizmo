@@ -1,7 +1,7 @@
 #! /Applications/Nuke11.0v3/Nuke11.0v3.app/Contents/MacOS/libnuke-11.0.3.dylib -nx
 version 11.0 v3
 Gizmo {
- name TransformGizmoNoVersion
+ name AnotherColorGizmo_v01
 }
  Input {
   inputs 0
