@@ -4,7 +4,7 @@ import os
 import nuke
 import viewer_util
 import node_util
-import gizmo_util
+from gizmo_util import GizmoLibrary
 
 # default menu icon for all non-vanilla nuke menu items
 DEFAULT_MENU_ICON = 'cb_icon.png'
@@ -13,6 +13,7 @@ DEFAULT_MENU_ICON = 'cb_icon.png'
 nuke_menu = nuke.menu('Nuke')
 node_menu = nuke.menu('Nodes')
 toolsets_menu = node_menu.findItem('ToolSets')
+cb_menu = nuke_menu.addMenu('ChickenBone')
 
 # checks nuke version because they changed the name of recent files in menu
 if nuke.NUKE_VERSION_MAJOR < 9:
@@ -55,6 +56,12 @@ def install():
     node_menu.addCommand('Time/FrameHold', "nuke.createNode('FrameHold')['first_frame'].setValue( nuke.frame() )", icon='FrameHold.png')
 
     # Gizmos
-    studio_gizmos = gizmo_util.library_from_path(os.getenv('NUKE_GIZMO_PATH'))
-    gizmo_util.load_library(studio_gizmos)
-    gizmo_util.add_libary_to_menu(studio_gizmos, node_menu)
+    studio_gizmos = GizmoLibrary.library_from_path(os.getenv('NUKE_GIZMO_PATH'))
+    studio_gizmos.load_library()
+    studio_gizmos.find_gizmo_item('ColorGizmo').set_version(1)
+    studio_gizmos.find_gizmo_item('ColorGizmo').set_shortcut('^y')
+    studio_gizmos.find_gizmo_item('ColorGizmo').set_submenu('OtherMenu\\ThisMenu')
+    studio_gizmos.find_gizmo_item('ColorGizmo').set_name('Sexy Name !')
+    studio_gizmos.find_gizmo_item('TransformGizmo').set_version(2)
+    studio_gizmos.add_library_to_menu(node_menu)
+    studio_gizmos.add_library_to_menu(cb_menu)
