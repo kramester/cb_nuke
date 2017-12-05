@@ -7,6 +7,7 @@ import node_util
 from gizmo_util import GizmoLibrary
 
 # default menu icon for all non-vanilla nuke menu items
+nuke.pluginAddPath('./icons')
 DEFAULT_MENU_ICON = 'cb_icon.png'
 
 # define menu locations
@@ -57,11 +58,6 @@ def install():
 
     # Gizmos
     studio_gizmos = GizmoLibrary.library_from_path(os.getenv('NUKE_GIZMO_PATH'))
-    studio_gizmos.load_library()
-    studio_gizmos.find_gizmo_item('ColorGizmo').set_version(1)
-    studio_gizmos.find_gizmo_item('ColorGizmo').set_shortcut('^y')
-    studio_gizmos.find_gizmo_item('ColorGizmo').set_submenu('OtherMenu\\ThisMenu')
-    studio_gizmos.find_gizmo_item('ColorGizmo').set_name('Sexy Name !')
-    studio_gizmos.find_gizmo_item('TransformGizmo').set_version(2)
+    # studio_gizmos.load_library()
     studio_gizmos.add_library_to_menu(node_menu)
     studio_gizmos.add_library_to_menu(cb_menu)

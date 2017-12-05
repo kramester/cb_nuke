@@ -1,9 +1,10 @@
+import os
 import nuke
 import nuke_tools.formats
+from nuke_tools.gizmo_util import GizmoLibrary
 
-# add paths so nuke loads gizmos and icons
-nuke.pluginAddPath('./gizmos')
-nuke.pluginAddPath('./icons')
+studio_gizmos = GizmoLibrary.library_from_path(os.getenv('NUKE_GIZMO_PATH'))
+studio_gizmos.load_library()
 
 # install customizations
 nuke_tools.formats.install()
