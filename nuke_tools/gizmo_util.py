@@ -3,35 +3,6 @@ import re
 import nuke
 
 
-# def library_from_path(path):
-#     path = os.path.abspath(path)
-#     glibrary = []
-#     for root, dirs, files in os.walk(path):
-#         if files:
-#             gdict = {}
-#             r = re.compile(r'.+\.gizmo$')
-#             gfiles = filter(r.match, files)
-#             gdict['files'] = sorted(gfiles)
-#             gdict['plugin_path'] = root
-#             gdict['folder'] = os.path.relpath(root, path)
-#             glibrary.append(gdict)
-#         else:
-#             pass
-#     return glibrary
-#
-#
-# def load_library(glibrary):
-#     for gdict in glibrary:
-#         nuke.pluginAddPath(gdict['plugin_path'])
-#
-#
-# def add_libary_to_menu(glibrary, root_menu):
-#     for gdict in glibrary:
-#         for gfile in gdict['files']:
-#             fname, fext = os.path.splitext(gfile)
-#             root_menu.addCommand('{}/{}'.format(gdict['folder'], fname), 'nuke.createNode(\'{}\')'.format(gfile), icon='{}.png'.format(fname))
-
-
 class GizmoLibrary:
     def __init__(self, plugin_paths, gizmo_menu_items):
         # default contructor
@@ -56,7 +27,7 @@ class GizmoLibrary:
         gizmo_menu_items = []
         for root, dirs, files in os.walk(path):
             if files:
-                # if there are files in the path, store the plugin_path for loading
+                # if there are any files in the path, store the plugin_path
                 plugin_paths.append(root)
                 # filter out only .gizmo files for the menu
                 r = re.compile(r'.+\.gizmo$')
@@ -119,7 +90,8 @@ class GizmoLibrary:
                 root_menu.addCommand(fullname, 'nuke.createNode(\'{}\')'.format(version), icon=gizmo.icon, shortcut=gizmo.shortcut, tooltip=gizmo.tooltip)
 
     def find_gizmo_item(self, name):
-        # returns the gizmo item from the library
+        # returns the gizmo item from the library, you use this to change
+        # GizmoMenuItem settings after the libray is created.
         for gizmo in self.gizmo_menu_items:
             if gizmo.name == name:
                 return gizmo

@@ -1,9 +1,9 @@
 """Adds custom nodes, plugins, and tools to the menus.
 """
-import os
 import nuke
 import viewer_util
 import node_util
+import settings
 from gizmo_util import GizmoLibrary
 
 # default menu icon for all non-vanilla nuke menu items
@@ -57,7 +57,8 @@ def install():
     node_menu.addCommand('Time/FrameHold', "nuke.createNode('FrameHold')['first_frame'].setValue( nuke.frame() )", icon='FrameHold.png')
 
     # Gizmos
-    studio_gizmos = GizmoLibrary.library_from_path(os.getenv('NUKE_GIZMO_PATH'))
+    studio_gizmos = GizmoLibrary.library_from_path(settings.STUDIO_GIZMO_PATH)
+    # these get loaded in the init.py so we dont need to load them here
     # studio_gizmos.load_library()
-    studio_gizmos.add_library_to_menu(node_menu)
-    studio_gizmos.add_library_to_menu(cb_menu)
+    studio_gizmos.add_library_to_menu(node_menu, default_icon=DEFAULT_MENU_ICON)
+    studio_gizmos.add_library_to_menu(cb_menu, default_icon=DEFAULT_MENU_ICON)
